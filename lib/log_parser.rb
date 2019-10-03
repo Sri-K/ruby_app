@@ -44,17 +44,3 @@ class LogParser
     raise "File or the directory not exists: #{logfile}" unless File.exist?(logfile)
   end
 end
-
-if ARGV[0]
-  logfile_parser = LogParser.new(ARGV[0])
-  logfile_parser.parse_logfile
-
-  puts
-  puts "Most page views"
-  puts "#{logfile_parser.print_most_views}"
-
-  puts
-  puts "Most Unique page views"
-  puts "#{logfile_parser.print_unique_views}"
-  puts
-end

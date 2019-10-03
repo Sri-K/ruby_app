@@ -2,13 +2,13 @@
 
 # Rubyapp to parse the logs
 
-A sample web server log parser
+A simple Ruby script that parses a webserver log.
 
 ### Install Requirements
 
 - `gem install bundler`
 - `bundle install`
-- ruby bin/parser.rb webserver.log
+- `ruby ./bin/parser.rb webserver.log`
 
 ### Tests
 
