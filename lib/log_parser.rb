@@ -1,13 +1,11 @@
 class LogParser
-  attr_reader :logfile
-  attr_accessor :logs
+  attr_reader :logfile, :logs
 
   def initialize(logfile)
     @logfile = logfile
     @logs = Hash.new { |h, k| h[k] = [] }
 
-    raise "File not found" if logfile.length.zero?
-    raise "File or the directory not exists: #{logfile}" unless File.exist?(logfile)
+    validate!
   end
 
   def parse_logfile
@@ -20,27 +18,30 @@ class LogParser
   end
 
   def print_total_views
-    generated_report = generate_report("total")
-    generated_report.sort_by {|k,v| v}.reverse.to_h
+    total_views = generate_report(unique: false)
+    sorted_report(total_views)
   end
 
   def print_unique_views
-    generated_report = generate_report("unique")
-    generated_report.sort_by {|k,v| v}.reverse.to_h
+    unique_views = generate_report(unique: true)
+    sorted_report(unique_views)
   end
 
   private
 
-  def generate_report(type)
+  def generate_report(unique:)
     @logs.each_with_object({}) do |(key, value), list|
-      if type == "total"
-        list[key] = value.size
-      elsif type == "unique"
-        list[key] = value.uniq.size
-      else
-        list[key] = value.size
-      end
+      list[key] = unique ? value.uniq.size : value.size
     end
+  end
+
+  def sorted_report(result_hash)
+    result_hash.sort_by {|k,v| v}.reverse.to_h
+  end
+
+  def validate!
+    raise "File not found" if logfile.length.zero?
+    raise "File or the directory not exists: #{logfile}" unless File.exist?(logfile)
   end
 end
 
