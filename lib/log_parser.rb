@@ -17,7 +17,7 @@ class LogParser
     @logs
   end
 
-  def print_total_views
+  def print_most_views
     total_views = generate_report(unique: false)
     sorted_report(total_views)
   end
@@ -51,7 +51,7 @@ if ARGV[0]
 
   puts
   puts "Most page views"
-  puts "#{logfile_parser.print_total_views}"
+  puts "#{logfile_parser.print_most_views}"
 
   puts
   puts "Most Unique page views"
